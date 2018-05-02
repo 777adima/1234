@@ -1,7 +1,15 @@
-language: csharp
-solution: "./Fibonacci/Fibonacci.sln"
+sudo: false
+
+language: python
+
+python:
+  - 2.7
+
 install:
-- travis_retry nuget restore -source "https://www.nuget.org/api/v2" ./Fibonacci/Fibonacci.sln
+  - pip install codecov
+
 script:
-- xbuild ./Fibonacci/Fibonacci.sln
-- mono ./Fibonacci/packages/xunit.runner.console*/tools/xunit.console.exe ./Fibonacci/Fibonacci.Tests/bin/Debug/Fibonacci.Tests.dll
+  - coverage run tests.py
+
+after_success:
+  - codecov
