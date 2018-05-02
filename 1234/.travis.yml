@@ -1,18 +1,7 @@
-language: python
-python:
-  - "2.6"
-  - "2.7"
-  - "3.3"
-  - "3.4"
-  - "3.5"
-  - "3.5-dev"  # 3.5 development branch
-  - "3.6"
-  - "3.6-dev"  # 3.6 development branch
-  - "3.7-dev"  # 3.7 development branch
-# command to install dependencies
+language: csharp
+solution: "./Fibonacci/Fibonacci.sln"
 install:
-  - pip install -r requirements.txt
-# command to run tests
+- travis_retry nuget restore -source "https://www.nuget.org/api/v2" ./Fibonacci/Fibonacci.sln
 script:
-#  - pytest # or py.test for Python versions 3.5 and below
-  - python -m pytest -v
+- xbuild ./Fibonacci/Fibonacci.sln
+- mono ./Fibonacci/packages/xunit.runner.console*/tools/xunit.console.exe ./Fibonacci/Fibonacci.Tests/bin/Debug/Fibonacci.Tests.dll
